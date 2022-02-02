@@ -1,13 +1,37 @@
 ﻿<h3>NestedComponent</h3>
 
 @code {
-    //Если закомментировать это свойство, то в SetParametersAsync в параметрах коллецкция _cascadingParameters будет пустой
+    //Если закомментировать это свойство, то в SetParametersAsync в параметрах коллецкция _cascadingParameters не будте содержать параметра типа string
     [CascadingParameter]
     public string? Message { get; set; }
+
+
+    //Оба параметра сразу работают, если работает каждый по отдельности
+
+    //Ok как в случае с щпущенным TValue, так и заданным в DescendantComponent
+    [CascadingParameter]
+    public AbstractComponent? AbstractComponent { get; set; }
+
+    //Не работает, если CascadingValue не задаёт TValue (видимо определяется как AbstractComponent)
+    //Работает, если задать в CascadingValue TValue="DescendantComponent"
+    [CascadingParameter]
+    public DescendantComponent? DescendantComponent { get; set; }
+
+
+    //С интерфейсами аналогично: если TValue не определён, то сработает только IAbstractComponent, если определён классом, но не интерфейсом - оба
+    //Сработает только этот, если TValue="IAbstractComponent"
+    [CascadingParameter]
+    public IAbstractComponent? IAbstractComponent { get; set; }
+
+    //Сработает только этот, если TValue="IDescendantComponent"
+    [CascadingParameter]
+    public IDescendantComponent? IDescendantComponent { get; set; }
 
     //parameters._cascadingParameters будет содержать что-то только если определено свойство такого же типа, как параметр с атрибутом CascadingParametr
     public override Task SetParametersAsync(ParameterView parameters) {
         return base.SetParametersAsync(parameters);
     }
+
+    //Замечание: явное преобразование занчения к типу сделает TValue этим типом: Value="(DescendantComponent)this"
 
 }

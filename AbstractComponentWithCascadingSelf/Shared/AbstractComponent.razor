@@ -1,5 +1,12 @@
 ﻿<h3>AbstractComponent</h3>
 
-<CascadingValue Value='"this is cascading value"' IsFixed="true">
-    @ChildContent
+<CascadingValue Value='"hello, cascading!"'>
+    <CascadingValue Value='this' IsFixed="true"> @*TValue определиться как AbstractComponent*@           @*Сработают св-ва типов AbstractComponent и IAbstract Conponent и string*@
+    @*<CascadingValue TValue="DescendantComponent" Value='(DescendantComponent)this' IsFixed="true">*@   @*Сработают все свойства*@
+    @*<CascadingValue Value="(IDescendantComponent)this" TValue="IDescendantComponent">*@                @*Сработает только св-во типа IDescendantComponent и string*@
+    @*<CascadingValue Value="(IAbstractComponent)this" TValue="IAbstractComponent">*@                    @*Сработает только св-во типа IAbstractComponent и string*@
+    @*<CascadingValue Value="this" TValue="IAbstractComponent">*@                                        @*Сработает только св-во типа IAbstractComponent и string*@
+        @ChildContent
+    </CascadingValue>
 </CascadingValue>
+
