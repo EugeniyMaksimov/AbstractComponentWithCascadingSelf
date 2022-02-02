@@ -1,0 +1,13 @@
+﻿<h3>NestedComponent</h3>
+
+@code {
+    //Если закомментировать это свойство, то в SetParametersAsync в параметрах коллецкция _cascadingParameters будет пустой
+    [CascadingParameter]
+    public string? Message { get; set; }
+
+    //parameters._cascadingParameters будет содержать что-то только если определено свойство такого же типа, как параметр с атрибутом CascadingParametr
+    public override Task SetParametersAsync(ParameterView parameters) {
+        return base.SetParametersAsync(parameters);
+    }
+
+}
